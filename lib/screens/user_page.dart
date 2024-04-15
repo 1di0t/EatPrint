@@ -1,5 +1,5 @@
-import 'package:eat_print/screens/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../widget/post_widget.dart';
 
@@ -12,16 +12,22 @@ class UserPage extends StatelessWidget {
         appBar: AppBar(
             automaticallyImplyLeading: false,
             title: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.home_rounded),
+                  padding: EdgeInsets.zero,
+                  icon: const Text(
+                    'EatPrint',
+                    style: TextStyle(
+                        fontFamily: 'lobster',
+                        fontSize: 30,
+                        color: Color(0xff432818)),
+                  ),
                   onPressed: () {
                     Navigator.pop(context); // do something
                   },
                 ),
-                const Text('EatPrint')
               ],
             )),
         body: Column(
@@ -48,8 +54,8 @@ class UserPage extends StatelessWidget {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   //A grid that can define a fixed number of tiles in the cross axis.
                   crossAxisCount: 3,
-                  crossAxisSpacing: 5,
-                  mainAxisSpacing: 5,
+                  crossAxisSpacing: 4,
+                  mainAxisSpacing: 4,
                 ),
                 itemBuilder: (context, index) {
                   return const Post();

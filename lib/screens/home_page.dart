@@ -14,10 +14,14 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('EatPrint'),
+              Text('EatPrint',
+                  style: TextStyle(
+                      fontFamily: 'lobster',
+                      fontSize: 30,
+                      color: Color(0xff432818))),
               Icon(Icons.restaurant_menu_rounded, size: 30)
             ],
           ),
