@@ -1,6 +1,7 @@
 import 'package:eat_print/screens/adding_page.dart';
 import 'package:eat_print/screens/desert_page.dart';
 import 'package:eat_print/screens/user_page.dart';
+import 'package:eat_print/widget/app_bar_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../widget/main_button_widget.dart';
@@ -12,20 +13,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('EatPrint',
-                  style: TextStyle(
-                      fontFamily: 'lobster',
-                      fontSize: 30,
-                      color: Color(0xff432818))),
-              Icon(Icons.restaurant_menu_rounded, size: 30)
-            ],
-          ),
-        ),
+        appBar: const AppBarWidget(operateOnPressed: false),
         body: Padding(
           //upper part of the body
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),

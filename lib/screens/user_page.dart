@@ -1,5 +1,5 @@
+import 'package:eat_print/widget/app_bar_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../widget/post_widget.dart';
 
@@ -9,32 +9,13 @@ class UserPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  padding: EdgeInsets.zero,
-                  icon: const Text(
-                    'EatPrint',
-                    style: TextStyle(
-                        fontFamily: 'lobster',
-                        fontSize: 30,
-                        color: Color(0xff432818)),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context); // do something
-                  },
-                ),
-              ],
-            )),
+        appBar: const AppBarWidget(operateOnPressed: true),
         body: Column(
           children: [
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
