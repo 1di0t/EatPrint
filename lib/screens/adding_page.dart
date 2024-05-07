@@ -7,10 +7,17 @@ class AddingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: AppBarWidget(operateOnPressed: true),
-      body: Center(
-        child: Text('Adding Page'),
-      ),
-    );
+        appBar: AppBarWidget(operateOnPressed: true),
+        body: Column(
+          children: [
+            Card(
+                margin: EdgeInsets.zero,
+                clipBehavior: Clip.hardEdge,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+                child: Column())
+          ],
+        ));
   }
 }

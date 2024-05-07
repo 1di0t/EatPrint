@@ -19,7 +19,7 @@ class UserPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '마승현',
+                    '전성일',
                     style: TextStyle(fontSize: 20),
                   ),
                   Icon(Icons.supervised_user_circle, size: 30)
