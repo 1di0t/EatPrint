@@ -6,6 +6,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const AppBarWidget({super.key, required this.operateOnPressed});
 
   void isTrueOnPress(context) {
+    // if operateOnPressed is true, then pop the current screen
     if (operateOnPressed) {
       Navigator.pop(context);
     }

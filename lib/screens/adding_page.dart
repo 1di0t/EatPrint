@@ -1,5 +1,7 @@
 import 'package:eat_print/widget/app_bar_widget.dart';
+import 'package:eat_print/widget/image_selecting_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class AddingPage extends StatelessWidget {
   const AddingPage({super.key});
@@ -10,13 +12,11 @@ class AddingPage extends StatelessWidget {
         appBar: AppBarWidget(operateOnPressed: true),
         body: Column(
           children: [
-            Card(
-                margin: EdgeInsets.zero,
-                clipBehavior: Clip.hardEdge,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                ),
-                child: Column())
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
+              child: ImageSelectingButton(),
+            ),
           ],
         ));
   }
