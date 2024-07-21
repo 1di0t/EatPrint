@@ -1,10 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_page.dart';
 import 'signup_page.dart';
+import '../api/auth_api.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,37 +15,44 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _useridController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool isLogined = false;
   String? _errorMessage;
 
-  Future<void> _login() async {
-    final response = await http.post(
-      Uri.parse('http://127.0.0.1:5000/login'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8'
-      },
-      body: jsonEncode(<String, String>{
-        'userid': _useridController.text,
-        'userpw': _passwordController.text,
-      }),
-    );
+  Future<void> _loginAndSave() async {
+    final result =
+        await login(_useridController.text, _passwordController.text);
+    final statusCode = result['statusCode'];
+    final body = result['body'];
 
-    if (response.statusCode == 200) {
-      final responseBody = json.decode(response.body);
+    if (statusCode == 200) {
+      final responseBody = body;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setInt('user_id', responseBody['id']);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
-    } else {
       setState(() {
-        _errorMessage = 'Invalid credentials';
+        isLogined = true;
+        _errorMessage = null;
+      });
+    } else if (statusCode == 404) {
+      setState(() {
+        _errorMessage = '존재하지 않는 아이디입니다.';
+      });
+    } else if (statusCode == 401) {
+      setState(() {
+        _errorMessage = '잘못된 비밀번호입니다.';
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (isLogined) {
+      Future.microtask(() {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      });
+    }
     return Scaffold(
       appBar: AppBar(title: const Text('Login Page')),
       body: Padding(
@@ -56,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             TextField(
               controller: _useridController,
-              decoration: const InputDecoration(labelText: 'User ID'),
+              decoration: const InputDecoration(labelText: 'ID'),
             ),
             TextField(
               controller: _passwordController,
@@ -65,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _login,
+              onPressed: _loginAndSave,
               child: const Text('Login'),
             ),
             if (_errorMessage != null)

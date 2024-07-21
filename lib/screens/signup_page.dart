@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+
+import '../api/auth_api.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -13,24 +13,29 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _useridController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String? _errorMessage;
+  bool isRegistered = false;
+
+  checkSuccess() {
+    if (isRegistered == true) {
+      Navigator.pop(context);
+    }
+  }
 
   Future<void> _signup() async {
-    final response = await http.post(
-      Uri.parse('http://127.0.0.1:5000/register'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8'
-      },
-      body: jsonEncode(<String, String>{
-        'userid': _useridController.text,
-        'userpw': _passwordController.text,
-      }),
-    );
+    final statusCode =
+        await signup(_useridController.text, _passwordController.text);
 
-    if (response.statusCode == 201) {
-      Navigator.pop(context);
+    if (statusCode == 201) {
+      setState(() {
+        isRegistered = true;
+      });
+    } else if (statusCode == 409) {
+      setState(() {
+        _errorMessage = '이미 존재하는 아이디입니다.';
+      });
     } else {
       setState(() {
-        _errorMessage = 'Failed to sign up';
+        _errorMessage = '회원가입 실패';
       });
     }
   }
