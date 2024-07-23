@@ -27,9 +27,12 @@ class HomePage extends StatelessWidget {
                 children: [
                   MainButton(
                       iconData: Icons.restaurant_menu_rounded,
+                      size: 60,
                       nextPage: MainDishPage()),
                   MainButton(
-                      iconData: Icons.cake_rounded, nextPage: DesertPage()),
+                      iconData: Icons.cake_rounded,
+                      size: 60,
+                      nextPage: DesertPage()),
                 ],
               ),
             ),
@@ -54,9 +57,11 @@ class HomePage extends StatelessWidget {
                 children: [
                   MainButton(
                       iconData: Icons.account_circle_rounded,
+                      size: 60,
                       nextPage: UserPage()),
                   MainButton(
                       iconData: Icons.add_circle_outline_outlined,
+                      size: 60,
                       nextPage: AddingPage()),
                 ],
               ),

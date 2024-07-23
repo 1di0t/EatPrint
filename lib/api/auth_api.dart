@@ -1,7 +1,19 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:developer' as developer;
+
+import '../main.dart';
 
 const baseURL = 'http://127.0.0.1:5000';
+
+Future<void> logout() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.remove('user_id');
+  final bool isLogined = await checkLoginStatus();
+  developer.log('isLogined: $isLogined', name: 'logout');
+}
+
 //send a POST request to the server to register a new user
 Future<int> signup(String userid, String userpw) async {
   final response = await http.post(
