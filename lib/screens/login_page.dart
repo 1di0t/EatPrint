@@ -47,6 +47,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    //Page Loading
+    //If the user is already logged in, the page is redirected to the home page.
     if (isLogined == true) {
       Future.microtask(() {
         Navigator.pushReplacement(
@@ -56,65 +58,84 @@ class _LoginPageState extends State<LoginPage> {
       });
     }
     return Scaffold(
-      appBar: AppBar(title: const Text('Login Page')),
       body: Padding(
         padding: const EdgeInsets.all(16 * 3),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              controller: _useridController,
-              decoration: const InputDecoration(
-                labelText: 'ID',
-                hintText: 'Enter your ID',
-                border: OutlineInputBorder(),
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const SizedBox(height: 50),
+              const Text(
+                'Login',
+                style: TextStyle(fontSize: 30),
               ),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-                hintText: 'Enter your password',
-                border: OutlineInputBorder(),
-              ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20),
-            Container(
-              width: double.infinity,
-              color: Theme.of(context).primaryColor,
-              child: TextButton(
-                onPressed: _loginAndSave,
-                child: const Text(
-                  'Login',
-                  style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+              const SizedBox(height: 50),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    TextField(
+                      controller: _useridController,
+                      decoration: const InputDecoration(
+                        hintText: 'ID',
+                        border: UnderlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(
+                        hintText: 'Password',
+                        border: UnderlineInputBorder(),
+                      ),
+                      obscureText: true,
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      width: double.infinity,
+                      color: Theme.of(context).primaryColor,
+                      child: TextButton(
+                        onPressed: _loginAndSave,
+                        child: const Text(
+                          'Login',
+                          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                      ),
+                    ),
+                    if (_errorMessage != null)
+                      Text(
+                        _errorMessage!,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          const Text('계정이 없으신가요?'),
+                          const SizedBox(width: 5),
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignupPage()),
+                              );
+                            },
+                            child: const Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            if (_errorMessage != null)
-              Text(
-                _errorMessage!,
-                style: const TextStyle(color: Colors.red),
-              ),
-            Container(
-              width: double.infinity,
-              color: Theme.of(context).primaryColor,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SignupPage()),
-                  );
-                },
-                child: const Text(
-                  'Sign Up',
-                  style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                ),
-              ),
-            ),
-          ],
-        ),
+            ]),
       ),
     );
   }
