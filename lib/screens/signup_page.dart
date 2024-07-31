@@ -1,4 +1,6 @@
+import 'package:eat_print/widget/input_field_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../api/auth_api.dart';
 
@@ -6,6 +8,7 @@ class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SignupPageState createState() => _SignupPageState();
 }
 
@@ -29,6 +32,7 @@ class _SignupPageState extends State<SignupPage> {
       setState(() {
         isRegistered = true;
       });
+      checkSuccess();
     } else if (statusCode == 409) {
       setState(() {
         _errorMessage = '이미 존재하는 아이디입니다.';
@@ -43,34 +47,49 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign Up')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              controller: _useridController,
-              decoration: const InputDecoration(labelText: 'User ID'),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _signup,
-              child: const Text('Sign Up'),
-            ),
-            if (_errorMessage != null)
-              Text(
-                _errorMessage!,
-                style: const TextStyle(color: Colors.red),
-              ),
-          ],
-        ),
-      ),
-    );
+        body: Padding(
+            padding: const EdgeInsets.all(16 * 3),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  const SizedBox(height: 50),
+                  const Text(
+                    'Sign Up',
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  const SizedBox(height: 50),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        InputField(
+                            controller: _useridController, hintText: 'Id'),
+                        const SizedBox(height: 10),
+                        InputField(
+                            controller: _passwordController,
+                            hintText: 'Password',
+                            obscureText: true),
+                        const SizedBox(height: 20),
+                        Container(
+                          width: double.infinity,
+                          color: Theme.of(context).primaryColor,
+                          child: TextButton(
+                            onPressed: _signup,
+                            child: const Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0)),
+                            ),
+                          ),
+                        ),
+                        if (_errorMessage != null)
+                          Text(
+                            _errorMessage!,
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                      ],
+                    ),
+                  ),
+                ])));
   }
 }

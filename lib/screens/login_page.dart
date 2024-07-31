@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../widget/input_field_widget.dart';
 import 'home_page.dart';
 import 'signup_page.dart';
 import '../api/auth_api.dart';
@@ -73,22 +74,12 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    TextField(
-                      controller: _useridController,
-                      decoration: const InputDecoration(
-                        hintText: 'ID',
-                        border: UnderlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    TextField(
-                      controller: _passwordController,
-                      decoration: const InputDecoration(
+                    InputField(controller: _useridController, hintText: 'Id'),
+                    const SizedBox(height: 10),
+                    InputField(
+                        controller: _passwordController,
                         hintText: 'Password',
-                        border: UnderlineInputBorder(),
-                      ),
-                      obscureText: true,
-                    ),
+                        obscureText: true),
                     const SizedBox(height: 20),
                     Container(
                       width: double.infinity,
