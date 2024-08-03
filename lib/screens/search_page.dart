@@ -1,14 +1,14 @@
 import 'package:eat_print/widget/app_bar_widget.dart';
 import 'package:flutter/material.dart';
 
-class UserPage extends StatelessWidget {
-  const UserPage({super.key});
+class SearchPage extends StatelessWidget {
+  const SearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Welcome to the User Page!'),
+        child: Text('Welcome to the Search Page!'),
       ),
       bottomNavigationBar: AppBarWidget(),
     );

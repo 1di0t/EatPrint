@@ -1,72 +1,23 @@
-import 'package:eat_print/screens/adding_page.dart';
-import 'package:eat_print/screens/desert_page.dart';
-import 'package:eat_print/screens/user_page.dart';
 import 'package:eat_print/widget/app_bar_widget.dart';
 import 'package:flutter/material.dart';
-
-import '../widget/main_button_widget.dart';
-import 'main_dish_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: const AppBarWidget(operateOnPressed: false),
-        body: Padding(
-          //upper part of the body
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: Column(children: [
-            const SizedBox(height: 70),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  MainButton(
-                      iconData: Icons.restaurant_menu_rounded,
-                      size: 60,
-                      nextPage: MainDishPage()),
-                  MainButton(
-                      iconData: Icons.cake_rounded,
-                      size: 60,
-                      nextPage: DesertPage()),
-                ],
-              ),
-            ),
-            Row(
-              //image
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/main_icon.png',
-                  width: 300,
-                  height: 300,
-                )
-              ],
-            ),
-            const Padding(
-              //lower part of the body
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  MainButton(
-                      iconData: Icons.account_circle_rounded,
-                      size: 60,
-                      nextPage: UserPage()),
-                  MainButton(
-                      iconData: Icons.add_circle_outline_outlined,
-                      size: 60,
-                      nextPage: AddingPage()),
-                ],
-              ),
-            ),
-          ]),
-        ));
+    return const Scaffold(
+      body: Column(
+        children: <Widget>[
+          SizedBox(height: 50),
+          Text(
+            'Home',
+            style: TextStyle(fontSize: 30),
+          ),
+          SizedBox(height: 50),
+        ],
+      ),
+      bottomNavigationBar: AppBarWidget(),
+    );
   }
 }
