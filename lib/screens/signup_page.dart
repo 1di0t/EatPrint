@@ -1,6 +1,5 @@
 import 'package:eat_print/widget/input_field_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../api/auth_api.dart';
 
@@ -15,6 +14,9 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   final TextEditingController _useridController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _nicknameController = TextEditingController();
+
   String? _errorMessage;
   bool isRegistered = false;
 
@@ -25,8 +27,11 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   Future<void> _signup() async {
-    final statusCode =
-        await signup(_useridController.text, _passwordController.text);
+    final statusCode = await signup(
+        _useridController.text,
+        _passwordController.text,
+        _nameController.text,
+        _nicknameController.text);
 
     if (statusCode == 201) {
       setState(() {
@@ -69,6 +74,13 @@ class _SignupPageState extends State<SignupPage> {
                             controller: _passwordController,
                             hintText: 'Password',
                             obscureText: true),
+                        const SizedBox(height: 10),
+                        InputField(
+                            controller: _nameController, hintText: 'Name'),
+                        const SizedBox(height: 10),
+                        InputField(
+                            controller: _nicknameController,
+                            hintText: 'NickName'),
                         const SizedBox(height: 20),
                         Container(
                           width: double.infinity,
