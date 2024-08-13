@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:eat_print/api/posting_api.dart';
 import 'package:eat_print/widget/app_bar_widget.dart';
 
 import 'package:flutter/material.dart';
@@ -14,17 +15,18 @@ class AddingPage extends StatefulWidget {
 }
 
 class _AddingPageState extends State<AddingPage> {
-  File? _image;
+  final List<XFile> _images = [];
   final ImagePicker picker = ImagePicker();
+  final TextEditingController contentController = TextEditingController();
 
   Future<void> _pickImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {}
-    });
+    // final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final List<XFile> pickedImages = await picker.pickMultiImage(limit: 5);
+    if (pickedImages.isNotEmpty) {
+      _images.clear();
+      _images.addAll(pickedImages);
+    }
+    setState(() {});
   }
 
   @override
@@ -33,30 +35,56 @@ class _AddingPageState extends State<AddingPage> {
       body: Column(
         children: <Widget>[
           const SizedBox(height: 50),
-          //top bar
           //picture
-          Expanded(
-            child: GestureDetector(
-                onTap: _pickImage,
-                child: Container(
-                  alignment: Alignment.center,
-                  child: _image == null
-                      ? Icon(
-                          Icons.add,
-                          size: 50,
-                          color: Colors.grey[800],
-                        )
-                      : ClipRRect(
-                          child: Image.file(
-                            _image!,
-                            width: double.infinity,
-                            height: double.infinity,
-                            fit: BoxFit.cover,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            height: 400,
+            child: Expanded(
+                child: GestureDetector(
+              onTap: _pickImage,
+              child: _images.isEmpty
+                  ? Icon(
+                      Icons.add,
+                      size: 50,
+                      color: Colors.grey[800],
+                    )
+                  : ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: _images.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: const EdgeInsets.all(8),
+                          width: 400,
+                          height: 400,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: FileImage(File(_images[index].path)),
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                )),
-          )
-          //gallery
+                        );
+                      },
+                    ),
+            )),
+          ),
+          //contents
+          TextField(
+            controller: contentController,
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.all(16),
+              hintText: '\t내용을 입력해주세요',
+              border: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+            ),
+            cursorColor: Colors.black,
+            maxLines: 5,
+          ),
+
+          //location
+          const SizedBox(height: 20),
+          TextButton(
+              onPressed: () => uploadImages(_images), child: const Text('저장')),
         ],
       ),
       bottomNavigationBar: const AppBarWidget(),
