@@ -4,6 +4,7 @@ import 'package:eat_print/api/posting_api.dart';
 import 'package:eat_print/widget/app_bar_widget.dart';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 import 'package:image_picker/image_picker.dart';
 
@@ -84,7 +85,9 @@ class _AddingPageState extends State<AddingPage> {
           //location
           const SizedBox(height: 20),
           TextButton(
-              onPressed: () => uploadImages(_images), child: const Text('저장')),
+              onPressed: () =>
+                  uploadPost(_images, contentController.text, 30, 20),
+              child: const Text('저장')),
         ],
       ),
       bottomNavigationBar: const AppBarWidget(),
