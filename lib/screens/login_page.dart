@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     if (statusCode == 200) {
       final responseBody = body;
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setInt('user_id', responseBody['id']);
+      await prefs.setInt('user_num', responseBody['user_num']);
       setState(() {
         isLogined = true;
         _errorMessage = null;
