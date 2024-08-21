@@ -7,11 +7,26 @@ import 'package:http_parser/http_parser.dart'; // Add this import statement
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+List<String> extractHashtags(String content) {
+  List<String> hashtags = [];
+  RegExp exp = RegExp(r"\B#[\w가-힣]+");
+  exp.allMatches(content).forEach((match) {
+    final hashtag = match.group(0);
+    if (hashtag != null) {
+      hashtags.add(hashtag);
+    }
+  });
+  return hashtags;
+}
+
 Future<int> uploadPost(
     List<XFile> images, String content, latitude, longitude) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  int userNum = prefs.getInt('user_num') ?? 0;
-  List<String> imageUrls = await uploadImages(images);
+  int userNum = prefs.getInt('user_num') ?? -1;
+  List<String> imageUrls =
+      await uploadImages(images); //upload images and return imageUrls
+  List<String> hashtags =
+      extractHashtags(content); //extract hashtags from content
   final http.Response response;
   try {
     response = await http.post(
@@ -21,13 +36,13 @@ Future<int> uploadPost(
       },
       body: jsonEncode(<String, dynamic>{
         'user_num': userNum,
-        'imageUrls': jsonEncode(imageUrls),
+        'imageUrls': imageUrls,
         'content': content,
         'location': {
           'latitude': latitude,
           'longitude': longitude,
         },
-        'hashtags': jsonEncode([]),
+        'hashtags': hashtags,
       }),
     );
   } catch (e) {
@@ -42,7 +57,6 @@ Future<List<String>> uploadImages(List<XFile> images) async {
       images.map((image) => _uploadImage(image)).toList();
 
   List<String> imageUrls = await Future.wait(uploadFutures);
-
   return imageUrls;
 }
 
