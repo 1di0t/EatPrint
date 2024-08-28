@@ -7,6 +7,8 @@ import 'package:http_parser/http_parser.dart'; // Add this import statement
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/post.dart';
+
 List<String> extractHashtags(String content) {
   List<String> hashtags = [];
   RegExp exp = RegExp(r"\B#[\w가-힣]+");
@@ -84,5 +86,16 @@ Future<String> _uploadImage(XFile imageFile) async {
     return responseData.body;
   } else {
     return response.statusCode.toString();
+  }
+}
+
+Future<List<Post>> fetchPosts() async {
+  final response = await http.get(Uri.parse('$baseURL/post'));
+
+  if (response.statusCode == 200) {
+    List<dynamic> jsonResponse = json.decode(response.body);
+    return jsonResponse.map((post) => Post.fromJson(post)).toList();
+  } else {
+    throw Exception('Failed to load posts');
   }
 }
