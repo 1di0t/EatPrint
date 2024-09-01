@@ -1,6 +1,7 @@
 class Post {
   final int postId;
   final int userNum;
+  final String userNickname;
   final String content;
   final Map<String, double>? location; // 위치 정보를 위도, 경도로 저장
   final List<String> imageUrls; // 이미지 URL 리스트
@@ -13,12 +14,16 @@ class Post {
     this.location,
     required this.imageUrls,
     required this.hashtags,
+    required this.userNickname,
   });
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
       postId: json['post_id'],
       userNum: json['user_num'],
+      userNickname: (json['user_nickname']?.isNotEmpty == true)
+          ? json['user_nickname']
+          : 'Unknown User',
       content: json['content'] ?? '',
       location: json['location'] != null
           ? {
