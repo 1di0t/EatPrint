@@ -1,7 +1,7 @@
 import 'package:eat_print/api/error_api.dart';
 import 'package:flutter/material.dart';
 
-Widget checkPageLoading(context, snapshot) {
+Widget? checkPageLoading(context, snapshot) {
   if (snapshot.connectionState == ConnectionState.waiting) {
     //if is waiting for data show loading
     return Center(
@@ -14,5 +14,5 @@ Widget checkPageLoading(context, snapshot) {
     //if no data show no post found
     return const Center(child: Text('No posts found.'));
   }
-  return Container();
+  return null;
 }
