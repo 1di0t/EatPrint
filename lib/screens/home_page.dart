@@ -36,7 +36,8 @@ class _HomePageState extends State<HomePage> {
       body: FutureBuilder<List<Post>>(
         future: posts,
         builder: (context, snapshot) {
-          if (checkPageLoading(context, snapshot) != Container()) {
+          // Check snapshot error
+          if (checkPageLoading(context, snapshot) == null) {
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
@@ -50,7 +51,8 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text('유저 번호: ${post.userNum}',
+                          // User profile image
+                          Text(post.userNickname,
                               style: Theme.of(context).textTheme.bodyLarge),
                         ],
                       ),
